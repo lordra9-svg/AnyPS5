@@ -118,7 +118,7 @@ static void* APS5_VABI RetainedStackWorker(void* opaque) {
     Require(scePthreadAttrDestroy(&attr) == SCE_OK);
     Require(size == probe.requested);
     probe.stack = reinterpret_cast<std::uintptr_t>(address);
-    probe.markerAddress = probe.stack + size - 4096;
+    probe.markerAddress = probe.stack + size - LOCAL_SLACK;
     *reinterpret_cast<std::uintptr_t*>(probe.markerAddress) = probe.marker;
     Require(*reinterpret_cast<const std::uintptr_t*>(probe.markerAddress) == probe.marker);
     probe.hostTid = static_cast<int>(syscall(SYS_gettid));
