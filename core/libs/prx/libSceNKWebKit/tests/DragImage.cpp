@@ -195,6 +195,7 @@ static void MovesSurfaceBetweenImages() {
 
     SurfaceFlag selfFlag;
     CairoSurface* self = TrackedSurface(selfFlag);
+    cairo_surface_reference(self);
     DragImage selfTarget;
     Construct(&selfTarget);
     selfTarget.m_dragImageRef.ptr = self;
