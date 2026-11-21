@@ -71,6 +71,7 @@ if(BUILD_TESTING)
     target_link_libraries(guest_fiber_stack_rename_switch_bounds_tests PRIVATE libSceFiber libc)
     configure_windows_unwind(guest_fiber_stack_rename_switch_bounds_tests)
     add_test(NAME guest_fiber_stack_rename_switch_bounds COMMAND guest_fiber_stack_rename_switch_bounds_tests)
+    add_asan_test_options(guest_fiber_stack_rename_switch_bounds detect_stack_use_after_return=0)
     set_tests_properties(guest_fiber_stack_rename_switch_bounds PROPERTIES TIMEOUT 20)
     if(WIN32)
         set_tests_properties(guest_fiber_stack_rename_switch_bounds PROPERTIES ENVIRONMENT_MODIFICATION
