@@ -355,7 +355,7 @@ Jsc::WtfAbi::OptionalString* APS5_VABI _ZN3WTF11Persistence5CoderINS_6StringEE6d
     if (length > MaxDecodedLength) throw std::length_error(name + ": length above INT32_MAX");
     using Jsc::WtfAbi::StringImpl;
     constexpr auto charactersOffset = offsetof(StringImpl, hashAndFlags) + sizeof(StringImpl::hashAndFlags);
-    void* storage = FastMalloc(charactersOffset + byteLength, name);
+    void* storage = FastMalloc(std::max<std::size_t>(sizeof(StringImpl), charactersOffset + byteLength), name);
     auto* characters = static_cast<std::uint8_t*>(storage) + charactersOffset;
     auto* string = new (storage) StringImpl{2u, length, characters, is8Bit ? Jsc::WtfAbi::StringImplFlag8Bit : 0u};
     DecodeData(*decoder, characters, byteLength);
