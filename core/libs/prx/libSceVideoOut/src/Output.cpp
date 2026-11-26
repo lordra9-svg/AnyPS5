@@ -473,7 +473,7 @@ int APS5_VABI sceVideoOutLatencyMeasureSetStartPoint(int handle, uint32_t point)
 }
 
 int APS5_VABI sceVideoOutColorSettingsSetGamma(VideoOutColorSettings* settings, float gamma) {
-    if (settings == nullptr) {
+    if (settings == nullptr || reinterpret_cast<std::uintptr_t>(settings) % alignof(VideoOutColorSettings) != 0) {
         throw std::runtime_error(std::string(__func__) + ": VIDEO_OUT_ERROR_INVALID_ADDRESS");
     }
     if (!std::isfinite(gamma) || gamma < 0.1f || gamma > 2.0f) {
