@@ -14,6 +14,7 @@ namespace {
 
 void APS5_VABI ReleaseCertificate(void* pointer) {
     if (!pointer) return;
+    if (reinterpret_cast<std::uintptr_t>(pointer) % alignof(LibreSsl3X509) != 0) NotImplementedAt_nid_no_patch(__func__, __FILE__, __LINE__);
     auto* const certificate = static_cast<LibreSsl3X509*>(pointer);
     std::int32_t currentRefs = 0;
     const int savedErrno = errno;
